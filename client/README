@@ -1,0 +1,47 @@
+# prompt for creating upload functionality: 
+@src you are an expert front end developer. Modify this applicaiton to enable .pdf document upload. Include an upload button in the chat-bottombar, to the right of the send button - ensure token count is to the right of the upload button. Add a  upload route inside the app>api folder. Create a new upload component in the components folder; have this be called in the chat-bottombar. If you think there's a better, cleaner and simpler way to do this, please do so. Here is the api endpoint code where the document is sent: @app.post("/upload")
+async def upload(file: UploadFile, user_id: str):  # Changed parameter order and removed task_id
+    """Handle document upload"""
+    upload_task = DocumentUploadTask(user_id=user_id)
+    
+    # Add the upload task to active_uploads
+    active_upload_tasks[user_id] = upload_task   
+    
+    result = await upload_task.astart_upload(file)
+    return {"task_id": user_id, **result}
+
+
+1. I'll help you add PDF upload functionality to the application. I'll break this down into several steps:
+First, let's create the upload component
+Then modify the chat-bottombar
+Finally, create the upload API route
+Here's the implementation:
+
+
+
+This implementation:
+Creates a reusable UploadButton component that handles file selection and upload
+Modifies the chat-bottombar to include the upload button in a clean layout
+Adds a server-side upload route that forwards files to your Python backend
+The upload button appears to the right of the input field, followed by the token count and send button. The layout is responsive and maintains the existing styling patterns.
+Some key features:
+PDF-only file validation
+Loading state during upload
+Error handling and user feedback via toast notifications
+Clean integration with existing UI components
+Proper typing and error handling throughout
+You'll need to ensure your environment variables include API_BASE_URL pointing to your Python backend. The upload endpoint will forward files to ${API_BASE_URL}/upload with the appropriate user ID.
+Would you like me to explain any part of this implementation in more detail?
+
+
+
+Key changes:
+Added a custom dialog component for the upload interface
+Made the dialog smaller with max-w-[300px]
+Simplified the dialog content
+Added a clean file input style
+Added upload status indicator
+Made text and components smaller with text-sm
+Added dialog state management
+Auto-closes dialog on successful upload
+The dialog should now be more compact and cleaner looking. Let me know if you'd like to adjust the size or styling further!

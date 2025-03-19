@@ -1,0 +1,18 @@
+[project]
+name = "api"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115.11",
+    "fastembed>=0.6.0",
+    "ipykernel>=6.29.5",
+    "langchain>=0.3.20",
+    "langchain-openai>=0.3.8",
+    "langchain-qdrant>=0.2.0",
+    "langgraph>=0.3.11",
+    "python-dotenv>=1.0.1",
+    "qdrant-client>=1.13.3",
+    "uvicorn>=0.34.0",
+]
