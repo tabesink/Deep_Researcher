@@ -53,6 +53,10 @@ export default function ChatBottombar({
     [input]
   );
 
+  const handleUploadComplete = (result: any) => {
+    console.log('Upload complete:', result);
+  };
+
   return (
     <div>
       <div className="stretch flex flex-row gap-3 last:mb-2 md:last:mb-6 mx-2 md:mx-4 md:mx-auto md:max-w-2xl xl:max-w-3xl">
@@ -68,33 +72,40 @@ export default function ChatBottombar({
               onKeyDown={handleKeyPress}
               onChange={handleInputChange}
               name="message"
-              placeholder="Ask vLLM anything..."
-              className="border-input max-h-48 px-4 py-4 text-base shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 dark:focus-visible:ring-slate-500 disabled:cursor-not-allowed disabled:opacity-50 w-full border rounded-md flex items-center h-14 resize-none overflow-hidden dark:bg-card/35 pr-[120px]"
+              placeholder="Ask anything..."
+              className="border-input max-h-48 px-4 py-4 text-base shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 dark:focus-visible:ring-slate-500 disabled:cursor-not-allowed disabled:opacity-50 w-full border rounded-md flex items-center h-14 resize-none overflow-hidden dark:bg-card/35 pr-32"
             />
-            <div className="absolute right-2 bottom-1.5 md:bottom-2 flex items-center gap-2">
-              <UploadButton />
-              <div className="text-xs text-muted-foreground px-2">
-                {tokenCount > tokenLimit ? (
-                  <span className="text-red-700">
-                    {tokenCount} token{tokenCount == 1 ? "" : "s"}
-                  </span>
-                ) : (
-                  <span>
-                    {tokenCount} token{tokenCount == 1 ? "" : "s"}
-                  </span>
-                )}
-              </div>
+            <div className="text-xs text-muted-foreground absolute right-[5rem] bottom-[1.15rem]">
+              {tokenCount > tokenLimit ? (
+                <span className="text-red-700">
+                  {tokenCount} token{tokenCount == 1 ? "" : "s"}
+                </span>
+              ) : (
+                <span>
+                  {tokenCount} token{tokenCount == 1 ? "" : "s"}
+                </span>
+              )}
+            </div>
+            <div className="absolute bottom-1.5 md:bottom-2 right-2 flex gap-0">
+              <UploadButton onUploadComplete={handleUploadComplete} />
               {!isLoading ? (
                 <Button
                   size="icon"
                   type="submit"
                   disabled={isLoading || !input.trim() || !hasSelectedModel}
+                  className="h-8 w-8 bg-transparent hover:bg-accent hover:text-accent-foreground"
+                  variant="ghost"
                 >
-                  <PaperPlaneIcon className="w-5 h-5 text-white dark:text-black" />
+                  <PaperPlaneIcon className="w-5 h-5" />
                 </Button>
               ) : (
-                <Button size="icon" onClick={stop}>
-                  <StopIcon className="w-5 h-5 text-white dark:text-black" />
+                <Button
+                  size="icon"
+                  onClick={stop}
+                  className="h-8 w-8 bg-transparent hover:bg-accent hover:text-accent-foreground"
+                  variant="ghost"
+                >
+                  <StopIcon className="w-5 h-5" />
                 </Button>
               )}
             </div>

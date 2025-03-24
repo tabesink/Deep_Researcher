@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { PaperPlaneIcon, StopIcon, ArrowRightIcon } from "@radix-ui/react-icons";
+import { PaperPlaneIcon, StopIcon } from "@radix-ui/react-icons";
 import { ChatRequestOptions } from "ai";
 import llama3Tokenizer from "llama3-tokenizer-js";
 import TextareaAutosize from "react-textarea-autosize";
@@ -86,7 +86,7 @@ export default function ChatBottombar({
                 </span>
               )}
             </div>
-            <div className="absolute top-1/2 transform -translate-y-1/2 right-2 flex gap-0">
+            <div className="absolute bottom-1.5 md:bottom-2 right-2 flex gap-0">
               <UploadButton onUploadComplete={handleUploadComplete} />
               {!isLoading ? (
                 <Button
@@ -96,7 +96,7 @@ export default function ChatBottombar({
                   className="h-8 w-8 bg-transparent hover:bg-accent hover:text-accent-foreground"
                   variant="ghost"
                 >
-                  <ArrowRightIcon className="w-5 h-5" />
+                  <PaperPlaneIcon className="w-5 h-5" />
                 </Button>
               ) : (
                 <Button

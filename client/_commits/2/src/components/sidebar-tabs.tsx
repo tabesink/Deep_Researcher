@@ -3,13 +3,15 @@
 import React from "react";
 
 import { DialogClose } from "@radix-ui/react-dialog";
-import { TrashIcon } from "@radix-ui/react-icons";
+import { ChatBubbleIcon, GearIcon, TrashIcon } from "@radix-ui/react-icons";
+import * as Tabs from "@radix-ui/react-tabs";
 import { Message } from "ai/react";
 import Link from "next/link";
 
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ChatOptions } from "./chat/chat-options";
+import Settings from "./settings";
 import SidebarSkeleton from "./sidebar-skeleton";
 import {
   Dialog,
@@ -40,9 +42,12 @@ const SidebarTabs = ({
   setChatOptions,
   handleDeleteChat,
 }: SidebarTabsProps) => (
-  <div className="overflow-hidden h-full bg-accent/20 dark:bg-card/35">
-    <div className="text-sm h-full">
-      <div className="h-screen overflow-y-auto">
+  <Tabs.Root
+    className="overflow-hidden h-full bg-accent/20 dark:bg-card/35"
+    defaultValue="chats"
+  >
+    <div className=" text-sm o h-full">
+      <Tabs.Content className="h-screen overflow-y-auto" value="chats">
         <div className="h-full mb-28">
           {Object.keys(localChats).length > 0 && (
             <>
@@ -128,9 +133,35 @@ const SidebarTabs = ({
           )}
           {isLoading && <SidebarSkeleton />}
         </div>
-      </div>
+      </Tabs.Content>
+      <Tabs.Content className="h-screen overflow-y-auto" value="settings">
+        <div className="h-full mb-16 pl-2">
+          <Settings chatOptions={chatOptions} setChatOptions={setChatOptions} />
+        </div>
+      </Tabs.Content>
     </div>
-  </div>
+    <div className="sticky left-0 right-0 bottom-0 z-20  m-0 overflow-hidden">
+      <Tabs.List
+        className="flex flex-wrap -mb-px py-2 text-sm font-medium text-center justify-center gap-2 bg-accent dark:bg-card"
+        aria-label="Navigation"
+      >
+        <Tabs.Trigger
+          className="inline-flex items-center justify-center p-0.5 rounded-sm data-[state=active]:bg-gray-200 dark:data-[state=active]:bg-gray-700 h-10 w-10"
+          value="chats"
+        >
+          <ChatBubbleIcon className="w-5 h-5" />
+          {/* <span className="text-xs">Chats</span> */}
+        </Tabs.Trigger>
+        <Tabs.Trigger
+          className="inline-flex items-center justify-center p-0.5 rounded-sm data-[state=active]:bg-gray-200 dark:data-[state=active]:bg-gray-700 h-10 w-10"
+          value="settings"
+        >
+          <GearIcon className="w-5 h-5" />
+          {/* <span className="text-xs">Settings</span> */}
+        </Tabs.Trigger>
+      </Tabs.List>
+    </div>
+  </Tabs.Root>
 );
 
 export default SidebarTabs;
